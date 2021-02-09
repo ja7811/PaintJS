@@ -1,4 +1,4 @@
-const canvas= document.getElementById("jsCanvas");
+const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
@@ -11,55 +11,60 @@ const range = document.getElementById("jsRange");
 canvas.width = 700;
 canvas.height = 700;
 
-ctx.strokeStyle = 'black';
+ctx.strokeStyle = "black";
 ctx.lineWidth = 2.5;
 
 let painting = false;
 
-function handleColorClick(event){
-    const color = event.target.style.backgroundColor;
-    console.log(color);
-    ctx.strokeStyle = color;
+function handleColorClick(event) {
+  const color = event.target.style.backgroundColor;
+  console.log(color);
+  ctx.strokeStyle = color;
 }
 
+function startPainting(event) {
+  const x = event.offsetX;
+  const y = event.offsetY;
 
-function startPainting(event){
-    const x = event.offsetX;
-    const y = event.offsetY;
-    
-    if(!painting){
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    }else{
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    }
+  if (!painting) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  } else {
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
 }
 
-
-function handleRangeInput(event){
-    strokeWidth = event.target.value;
-    ctx.lineWidth = strokeWidth;
+function handleRangeInput(event) {
+  strokeWidth = event.target.value;
+  ctx.lineWidth = strokeWidth;
 }
 
-
-if(canvas){
-    canvas.addEventListener("mousemove", startPainting);
-    canvas.addEventListener("mousedown", function(event){painting = true;});
-    canvas.addEventListener("mouseleave", function(event){painting = false;});
-    canvas.addEventListener("mouseup", function(event){painting = false;});
-}else{
-    console.log("canvas not found!!");
+if (canvas) {
+  canvas.addEventListener("mousemove", startPainting);
+  canvas.addEventListener("mousedown", function (event) {
+    painting = true;
+  });
+  canvas.addEventListener("mouseleave", function (event) {
+    painting = false;
+  });
+  canvas.addEventListener("mouseup", function (event) {
+    painting = false;
+  });
+} else {
+  console.log("canvas not found!!");
 }
 
-if(range){
-    range.addEventListener("input", handleRangeInput);
-}else{
-    console.log("range not found!");
+if (range) {
+  range.addEventListener("input", handleRangeInput);
+} else {
+  console.log("range not found!");
 }
 
-if(colors){
-    Array.from(colors).forEach(color => addEventListener("mousedown", handleColorClick));
-}else{
-    console.log("colors not found!");
+if (colors) {
+  Array.from(colors).forEach((color) =>
+    addEventListener("mousedown", handleColorClick)
+  );
+} else {
+  console.log("colors not found!");
 }
